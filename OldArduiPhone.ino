@@ -8,8 +8,11 @@
 #define MAX_VALID_PULSE 150000
 #define PULSE_IN_TIMEOUT 300000
 
-//in SA phone numbers are 10 digit long - to be changed for your country
-//Sorry, no international calls - It's possible but the code would become a lot more advanced
+/*
+ *In SA phone numbers are 10 digit long - to be changed for your country 
+ *For international calls, the code looks at the second digit. 
+ *If it's also a 0, the automatic dialing is disabled. See comment down below.
+ */
 #define PHONE_NUMBER_LENGTH 10 
 
 bool off_hook = false;
@@ -127,7 +130,7 @@ void dialCellDigit(byte digit){
 
   /*
    * if the 2nd digit is 0, I'm dialing an international number 
-   * Will disable auto-dialing based on that
+   * Will disable auto-dialing based on that.
    */
   if(digit == 10 && digitCount == 1)
     digit2zero = true;
@@ -146,13 +149,14 @@ void dialCellDigit(byte digit){
 
   /*
    * When we get to the proper length for a phone number
+   * If the second digit was a 0, we are doing an international call.
+   * Then dialing will be manual.
    */
   if(digitCount == PHONE_NUMBER_LENGTH && !digit2zero){
     /*
      * Call the number
      */
     //Serial.println("Calling"); //for debugging
-    delay(1000);
     call(500);
   }
 }
