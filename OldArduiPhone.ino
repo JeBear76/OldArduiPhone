@@ -151,6 +151,7 @@ void dialCellDigit(byte digit){
     /*
      * Call the number
      */
+    //Serial.println("Calling"); //for debugging
     delay(1000);
     call(500);
   }
