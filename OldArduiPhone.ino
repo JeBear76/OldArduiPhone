@@ -1,8 +1,9 @@
-#define PULSE_ACTIVE B00000100
+#define PULSE_ACTIVE B00000100 // Pin 3 but here this is used to identify the pin in register PIND.
 #define PULSE_IN 3
 #define CALL_PIN 14
 #define CLEAR_PIN 15
 #define BOOT_PIN 16
+#define HANGUP_BUTTON 18
 #define HANGUP_BUTTON_PIN B00010000  // Pin 18 but here this is used to identify the pin in register PINC.
 #define MIN_VALID_PULSE 50000
 #define MAX_VALID_PULSE 150000
@@ -27,10 +28,7 @@ void setup() {
    */
   pinMode(PULSE_ACTIVE, INPUT);
   pinMode(PULSE_IN, INPUT);
-  //DDRC = 0;
-  //DDRC = B00000111;
-  //PORTC = PORTC & HANGUP_BUTTON_PIN; 
-  pinMode(18, INPUT);
+  pinMode(HANGUP_BUTTON, INPUT);
   /*
    * pins for the cellphone 
    */
@@ -72,6 +70,7 @@ void loop() {
   int hookState = PINC;
   hookState = hookState & HANGUP_BUTTON_PIN;
   if(hookState){
+    //Serial.println("on hook"); //for debugging
     /*
      * This prevents the HangUp() function from being called all the time when the receiver in down.
      * On my cellphone, the hangup and shutdown button are the same.
@@ -94,7 +93,7 @@ void loop() {
   int activeState = PIND;
   activeState = PIND & PULSE_ACTIVE;
     
-  //if(activeState) Serial.println("Active"); //for debugging
+  //if(activeState) //Serial.println("Active"); //for debugging
   
   while(activeState){
     off_hook = true;
@@ -132,7 +131,7 @@ void dialCellDigit(byte digit){
    * if the 2nd digit is 0, I'm dialing an international number 
    * Will disable auto-dialing based on that.
    */
-  if(digit == 10 && digitCount == 1)
+  if(digit == 10 && digitCount == 2)
     digit2zero = true;
     
   /*
