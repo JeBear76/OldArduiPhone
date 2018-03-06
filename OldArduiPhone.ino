@@ -1,4 +1,4 @@
-#define PULSE_ACTIVE B00000100 // Pin 3 but here this is used to identify the pin in register PIND.
+#define PULSE_ACTIVE B00000100 // Pin 2 but here this is used to identify the pin in register PIND.
 #define PULSE_IN 3
 #define CALL_PIN 14
 #define CLEAR_PIN 15
@@ -97,10 +97,7 @@ void loop() {
   
   while(activeState){
     off_hook = true;
-    /*
-    * 500000 is half a second. 
-    * Anything below messes up the readings
-    */
+    
     unsigned long val = myPulseIn(3, LOW, PULSE_IN_TIMEOUT); 
     //Serial.println(val); //for debugging
     if(val > MIN_VALID_PULSE && val < MAX_VALID_PULSE){
@@ -190,7 +187,7 @@ void hangUp(){
  * This code replaces the default Arduino PulseIn
  * Credits to Jims in this thread.
  * https://forum.arduino.cc/index.php?topic=46011.0
- * I panelbeated it a little because it got stuck in the last call.
+ * I panelbeated it a little because it got stuck if when the PULSE_ACTIVE resets.
  */
 unsigned long myPulseIn(uint8_t pin, uint8_t state, long timeOut)
 {
