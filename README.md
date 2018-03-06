@@ -22,4 +22,5 @@ To do the whole keypad, you'll need to connect each O-I to its combination of ro
 The grey wire serves to detect when the dial is in use.
 The orange wire goes the the output of the dial's pulsating switch
 
+[Full Story on Hackster.io](https://www.hackster.io/Jerepondumie/oldarduiphone-or-the-hipster-cellphone-649686)
 
