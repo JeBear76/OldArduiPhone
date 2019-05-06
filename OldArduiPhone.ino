@@ -1,4 +1,5 @@
 #define PULSE_ACTIVE B00000100 // Pin 2 but here this is used to identify the pin in register PIND.
+#define PULSE_ACTIVE_INT 2
 #define PULSE_IN 3
 #define CALL_PIN 14
 #define CLEAR_PIN 15
@@ -26,7 +27,7 @@ void setup() {
   /*
    * pins for the dialer
    */
-  pinMode(PULSE_ACTIVE, INPUT);
+  pinMode(PULSE_ACTIVE_INT, INPUT);
   pinMode(PULSE_IN, INPUT);
   pinMode(HANGUP_BUTTON, INPUT);
   /*
@@ -93,7 +94,7 @@ void loop() {
   int activeState = PIND;
   activeState = PIND & PULSE_ACTIVE;
     
-  //if(activeState) //Serial.println("Active"); //for debugging
+  //if(activeState) Serial.println("Active"); //for debugging
   
   while(activeState){
     off_hook = true;
