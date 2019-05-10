@@ -5,6 +5,9 @@
 bool hasDigit = false;
 
 void setup() {
+  for(int i=0; i<7; i++){
+    pinMode(i, INPUT);
+  }
   Serial.begin(9600);
 }
 
